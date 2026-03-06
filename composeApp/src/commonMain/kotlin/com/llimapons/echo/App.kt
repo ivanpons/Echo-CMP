@@ -13,16 +13,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.llimapons.core.designsystem.theme.EchoTheme
 import org.jetbrains.compose.resources.painterResource
 
 import echo.composeapp.generated.resources.Res
 import echo.composeapp.generated.resources.compose_multiplatform
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
+    EchoTheme {
         var showContent by remember { mutableStateOf(false) }
         Column(
             modifier = Modifier
