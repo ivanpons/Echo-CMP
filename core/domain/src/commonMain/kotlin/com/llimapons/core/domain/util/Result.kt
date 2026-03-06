@@ -37,3 +37,13 @@ fun <T, E: Error> Result<T, E>.asEmptyResult(): EmptyResult<E> {
 }
 
 typealias EmptyResult<E> = Result<Unit, E>
+
+inline fun <T, E: Error> Result<T, E>.fold(
+    onSuccess: (T) -> Unit,
+    onFailure: (E) -> Unit
+) {
+    return when (this) {
+        is Result.Failure -> onFailure(error)
+        is Result.Success -> onSuccess(data)
+    }
+}
