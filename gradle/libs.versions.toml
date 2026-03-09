@@ -47,6 +47,7 @@ coil = "3.3.0"
 coil-network = "3.3.0"
 moko = "0.19.1"
 buildkonfig = "0.17.1"
+kermit = "2.0.6"
 
 projectApplicationId = "com.llimapons.echo"
 projectVersionName = "1.0"
@@ -148,6 +149,9 @@ buildkonfig-compiler = { group = "com.codingfeline.buildkonfig", name = "buildko
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 
+# Logging
+touchlab-kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
+
 koin-bom = { group = "io.insert-koin", name = "koin-bom", version.ref = "koin" }
 jetbrains-compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref="compose-jetbrains" }
 jetbrains-compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref="compose-jetbrains"}
@@ -209,5 +213,6 @@ ktor-common = [
     "ktor-client-core",
     "ktor-client-content-negotiation",
     "ktor-serialization-kotlinx-json",
-    "ktor-client-auth"
+    "ktor-client-auth",
+    "ktor-client-logging"
 ]
