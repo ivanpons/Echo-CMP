@@ -77,6 +77,7 @@ fun EchoAdaptativeFormLayout(
                 modifier = modifier
                     .fillMaxSize()
                     .consumeWindowInsets(WindowInsets.displayCutout)
+                    .consumeWindowInsets(WindowInsets.navigationBars)
             ) {
                 Column(
                     modifier = Modifier
@@ -88,15 +89,19 @@ fun EchoAdaptativeFormLayout(
                     AuthHeaderSection(
                         headerText = headerText,
                         headerColor = headerColor,
-                        errorText = errorText
+                        errorText = errorText,
+                        textAlignment = TextAlign.Start
                     )
                 }
                 EchoSurface(
                     modifier = Modifier
                         .weight(1f),
                 ) {
+                    Spacer(modifier = Modifier.height(16.dp))
                     formContent()
+                    Spacer(modifier = Modifier.height(16.dp))
                 }
+                Spacer(modifier = Modifier.height(16.dp))
             }
         }
 
@@ -119,7 +124,6 @@ fun EchoAdaptativeFormLayout(
                         .clip(RoundedCornerShape(32.dp))
                         .background(MaterialTheme.colorScheme.surface)
                         .padding(horizontal = 24.dp, vertical = 32.dp),
-                    verticalArrangement = Arrangement.spacedBy(24.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
                     AuthHeaderSection(
@@ -127,6 +131,7 @@ fun EchoAdaptativeFormLayout(
                         headerColor = headerColor,
                         errorText = errorText
                     )
+                    Spacer(modifier = Modifier.height(16.dp))
                     formContent()
                 }
             }
@@ -140,12 +145,13 @@ fun ColumnScope.AuthHeaderSection(
     headerText: String,
     headerColor: Color,
     errorText: String? = null,
+    textAlignment: TextAlign = TextAlign.Center
 ) {
     Text(
         text = headerText,
         style = MaterialTheme.typography.titleLarge,
         color = headerColor,
-        textAlign = TextAlign.Center,
+        textAlign = textAlignment,
         modifier = Modifier.fillMaxWidth()
     )
     AnimatedVisibility(
@@ -156,7 +162,7 @@ fun ColumnScope.AuthHeaderSection(
                 text = errorText,
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.error,
-                textAlign = TextAlign.Center,
+                textAlign = textAlignment,
                 modifier = Modifier.fillMaxWidth()
             )
         }
