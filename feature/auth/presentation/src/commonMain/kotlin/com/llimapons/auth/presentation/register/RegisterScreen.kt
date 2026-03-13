@@ -19,6 +19,7 @@ import com.llimapons.core.designsystem.components.layouts.EchoSnackbarScaffold
 import com.llimapons.core.designsystem.components.textfields.EchoPasswordTextField
 import com.llimapons.core.designsystem.components.textfields.EchoTextField
 import com.llimapons.core.designsystem.theme.EchoTheme
+import com.llimapons.core.presentation.util.ObserveAsEvents
 import echo.feature.auth.presentation.generated.resources.Res
 import echo.feature.auth.presentation.generated.resources.email
 import echo.feature.auth.presentation.generated.resources.email_placeholder
@@ -32,14 +33,23 @@ import echo.feature.auth.presentation.generated.resources.username_placeholder
 import echo.feature.auth.presentation.generated.resources.welcome_to_echo
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun RegisterRoot(
-    viewModel: RegisterViewModel = viewModel()
+    viewModel: RegisterViewModel = koinViewModel(),
+    onRegisterSuccess: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-
     val snackbarHostState = remember { SnackbarHostState() }
+
+    ObserveAsEvents(viewModel.events){ event ->
+        when(event) {
+            is RegisterEvent.Success -> {
+                onRegisterSuccess(event.email)
+            }
+        }
+    }
 
     RegisterScreen(
         state = state,

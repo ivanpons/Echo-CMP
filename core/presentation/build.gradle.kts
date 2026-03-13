@@ -17,6 +17,7 @@ kotlin {
 
                 implementation(libs.material3.adaptive)
                 implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
             }
         }
 
