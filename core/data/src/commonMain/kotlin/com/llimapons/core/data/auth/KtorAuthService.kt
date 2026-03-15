@@ -1,5 +1,6 @@
 package com.llimapons.core.data.auth
 
+import com.llimapons.core.data.auth.dto.requests.EmailRequest
 import com.llimapons.core.data.auth.dto.requests.RegisterRequest
 import com.llimapons.core.data.networking.post
 import com.llimapons.core.domain.auth.AuthService
@@ -23,6 +24,13 @@ class KtorAuthService(
                 username = username,
                 password = password
             )
+        )
+    }
+
+    override suspend fun resendVerificationEmail(email: String): EmptyResult<DataError.Remote> {
+        return httpClient.post(
+            route = "/auth/resend-verification",
+            body = EmailRequest(email)
         )
     }
 }
