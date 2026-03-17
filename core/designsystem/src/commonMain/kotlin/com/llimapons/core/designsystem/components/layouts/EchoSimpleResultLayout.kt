@@ -1,13 +1,12 @@
 package com.llimapons.core.designsystem.components.layouts
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,19 +17,15 @@ import androidx.compose.ui.unit.dp
 import com.llimapons.core.designsystem.components.brand.EchoSuccessIcon
 import com.llimapons.core.designsystem.components.buttons.EchoButton
 import com.llimapons.core.designsystem.components.buttons.EchoButtonStyle
-import com.llimapons.core.designsystem.components.buttons.EchoPrimaryButtonPreview
 import com.llimapons.core.designsystem.theme.EchoTheme
 import com.llimapons.core.designsystem.theme.extended
-import echo.core.designsystem.generated.resources.Res
-import echo.core.designsystem.generated.resources.success_checkmark
-import org.jetbrains.compose.resources.vectorResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
-fun EchoSimpleSuccessLayout(
+fun EchoSimpleResultLayout(
     title: String,
     description: String,
-    icon: @Composable () -> Unit,
+    icon: @Composable ColumnScope.() -> Unit,
     primaryButton: @Composable () -> Unit,
     secondaryButton: @Composable (() -> Unit)? = null,
     secondaryError: String? = null,
@@ -92,7 +87,7 @@ fun EchoSimpleSuccessLayout(
 )
 fun EchoSimpleSuccessLayoutPreview() {
     EchoTheme {
-        EchoSimpleSuccessLayout(
+        EchoSimpleResultLayout(
             title =  "Registration Successful!",
             description = "Your account has been successfully created.",
             icon = {

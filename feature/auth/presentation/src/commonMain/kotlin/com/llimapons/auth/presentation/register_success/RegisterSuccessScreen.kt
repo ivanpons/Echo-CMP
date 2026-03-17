@@ -11,7 +11,7 @@ import com.llimapons.core.designsystem.components.brand.EchoSuccessIcon
 import com.llimapons.core.designsystem.components.buttons.EchoButton
 import com.llimapons.core.designsystem.components.buttons.EchoButtonStyle
 import com.llimapons.core.designsystem.components.layouts.EchoAdaptativeResultLayout
-import com.llimapons.core.designsystem.components.layouts.EchoSimpleSuccessLayout
+import com.llimapons.core.designsystem.components.layouts.EchoSimpleResultLayout
 import com.llimapons.core.designsystem.components.layouts.EchoSnackbarScaffold
 import com.llimapons.core.designsystem.theme.EchoTheme
 import com.llimapons.core.presentation.util.ObserveAsEvents
@@ -62,7 +62,7 @@ fun RegisterSuccessScreen(
         snackbarHostState = snackbarHostState
     ) {
         EchoAdaptativeResultLayout {
-            EchoSimpleSuccessLayout(
+            EchoSimpleResultLayout(
                 title = stringResource(Res.string.account_successfully_created),
                 description = stringResource(
                     Res.string.verification_email_sent_to_x,
