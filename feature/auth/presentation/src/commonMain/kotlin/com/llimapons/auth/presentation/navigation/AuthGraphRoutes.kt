@@ -8,6 +8,10 @@ sealed interface AuthGraphRoutes {
 
     @Serializable
     data object Register: AuthGraphRoutes
+
+    @Serializable
+    data object Login: AuthGraphRoutes
+
     @Serializable
     data class RegisterSuccess(val email: String): AuthGraphRoutes
 

@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import com.llimapons.auth.presentation.email_verification.EmailVerificationRoot
+import com.llimapons.auth.presentation.login.LoginRoot
 import com.llimapons.auth.presentation.register.RegisterRoot
 import com.llimapons.auth.presentation.register_success.RegisterSuccessRoot
 
@@ -14,17 +15,50 @@ fun NavGraphBuilder.authGraph(
     onLoginSuccess: () -> Unit,
 ){
     navigation<AuthGraphRoutes.Graph>(
-        startDestination = AuthGraphRoutes.Register
+        startDestination = AuthGraphRoutes.Login
     ){
+        composable<AuthGraphRoutes.Login> {
+            LoginRoot(
+                onLoginSuccess = onLoginSuccess,
+                onCreateAccountClick = {
+                    navController.navigate(AuthGraphRoutes.Register) {
+                        restoreState = true
+                        launchSingleTop = true
+                    }
+                },
+                onForgotPasswordClick = {
+                    navController.navigate(AuthGraphRoutes.ForgotPassword)
+                }
+            )
+        }
+
         composable<AuthGraphRoutes.Register> {
             RegisterRoot(
                 onRegisterSuccess = { email ->
                     navController.navigate(AuthGraphRoutes.RegisterSuccess(email))
+                },
+                onLoginClick = {
+                    navController.navigate(AuthGraphRoutes.Login) {
+                        popUpTo(AuthGraphRoutes.Register) {
+                            inclusive = true
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                 }
             )
         }
         composable<AuthGraphRoutes.RegisterSuccess> {
-            RegisterSuccessRoot()
+            RegisterSuccessRoot(
+                onLoginClick = {
+                    navController.navigate(AuthGraphRoutes.Login) {
+                        popUpTo(AuthGraphRoutes.RegisterSuccess) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
 
         composable<AuthGraphRoutes.EmailVerification>(
@@ -37,7 +71,22 @@ fun NavGraphBuilder.authGraph(
                 },
             )
         ) {
-            EmailVerificationRoot()
+            EmailVerificationRoot(
+                onLoginClick = {
+                    navController.navigate(AuthGraphRoutes.Login) {
+                        popUpTo(AuthGraphRoutes.EmailVerification) {
+                            inclusive = true
+                        }
+                    }
+                },
+                onCloseClick = {
+                    navController.navigate(AuthGraphRoutes.Login) {
+                        popUpTo(AuthGraphRoutes.EmailVerification) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
     }
 

@@ -2,8 +2,16 @@ package com.llimapons.core.domain.auth
 
 import com.llimapons.core.domain.util.DataError
 import com.llimapons.core.domain.util.EmptyResult
+import com.llimapons.core.domain.util.Error
+import com.llimapons.core.domain.util.Result
 
 interface AuthService {
+
+    suspend fun login(
+        email: String,
+        password: String
+    ): Result<AuthInfo, DataError.Remote>
+
     suspend fun register(
         email: String,
         username: String,

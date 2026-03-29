@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -38,7 +39,8 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun RegisterRoot(
     viewModel: RegisterViewModel = koinViewModel(),
-    onRegisterSuccess: (String) -> Unit
+    onRegisterSuccess: (String) -> Unit,
+    onLoginClick: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -53,7 +55,13 @@ fun RegisterRoot(
 
     RegisterScreen(
         state = state,
-        onAction = viewModel::onAction,
+        onAction = { action ->
+            when(action){
+                is RegisterAction.OnLoginClick -> onLoginClick()
+                else -> Unit
+            }
+            viewModel.onAction(action)
+        },
         snackbarHostState = snackbarHostState
     )
 }
@@ -88,6 +96,7 @@ fun RegisterScreen(
                 state = state.emailTextState,
                 placeHolder = stringResource(Res.string.email_placeholder),
                 title = stringResource(Res.string.email),
+                keyboardType = KeyboardType.Email,
                 supportingText = state.emailError?.asString(),
                 isError = state.emailError != null,
                 onFocusChanged = {isFocused ->

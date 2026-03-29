@@ -36,8 +36,8 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun EchoAdaptativeFormLayout(
     headerText: String,
-    errorText: String? = null,
     logo: @Composable () -> Unit,
+    errorText: String? = null,
     modifier: Modifier = Modifier,
     formContent: @Composable ColumnScope.() -> Unit
 ) {
