@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import com.llimapons.auth.presentation.email_verification.EmailVerificationRoot
+import com.llimapons.auth.presentation.forgot_password.ForgotPasswordRoot
 import com.llimapons.auth.presentation.login.LoginRoot
 import com.llimapons.auth.presentation.register.RegisterRoot
 import com.llimapons.auth.presentation.register_success.RegisterSuccessRoot
@@ -87,6 +88,10 @@ fun NavGraphBuilder.authGraph(
                     }
                 }
             )
+        }
+
+        composable<AuthGraphRoutes.ForgotPassword> {
+            ForgotPasswordRoot()
         }
     }
 
