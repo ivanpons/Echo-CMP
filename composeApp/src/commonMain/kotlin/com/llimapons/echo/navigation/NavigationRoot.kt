@@ -14,10 +14,11 @@ import com.llimapons.chat.presentation.chat_list.ChatListScreenRoot
 fun NavigationRoot(
     navController: NavHostController,
     modifier: Modifier = Modifier,
+    startDestination: Any,
 ){
     NavHost(
         navController = navController,
-        startDestination = AuthGraphRoutes.Graph
+        startDestination = startDestination
     ){
         authGraph(
             navController = navController,

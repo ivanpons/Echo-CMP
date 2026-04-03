@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.llimapons.auth.domain.EmailValidator
 import com.llimapons.core.domain.auth.AuthService
+import com.llimapons.core.domain.auth.SessionStorage
 import com.llimapons.core.domain.util.DataError
 import com.llimapons.core.domain.util.onFailure
 import com.llimapons.core.domain.util.onSuccess
@@ -27,7 +28,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LoginViewModel(
-    private val authService: AuthService
+    private val authService: AuthService,
+    private val sessionStorage: SessionStorage
 ) : ViewModel() {
 
     private var hasLoadedInitialData = false
@@ -122,6 +124,7 @@ class LoginViewModel(
                     }
                 }
                 .onSuccess { authInfo ->
+                    sessionStorage.set(authInfo)
                     _state.update {
                         it.copy(
                             isLoggingIn = false

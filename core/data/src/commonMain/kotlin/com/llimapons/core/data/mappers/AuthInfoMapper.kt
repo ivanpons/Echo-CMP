@@ -1,7 +1,7 @@
 package com.llimapons.core.data.mappers
 
-import com.llimapons.core.data.auth.dto.AuthInfoSerializable
-import com.llimapons.core.data.auth.dto.UserSerializable
+import com.llimapons.core.data.dto.AuthInfoSerializable
+import com.llimapons.core.data.dto.UserSerializable
 import com.llimapons.core.domain.auth.AuthInfo
 import com.llimapons.core.domain.auth.User
 
@@ -20,5 +20,23 @@ fun UserSerializable.toDomain(): User {
         username = username,
         hasVerifiedEmail = hasVerifiedEmail,
         profilePictureUrl = profilePictureUrl
+    )
+}
+
+fun User.toSerializable(): UserSerializable {
+    return UserSerializable(
+        id = id,
+        email = email,
+        username = username,
+        hasVerifiedEmail = hasVerifiedEmail,
+        profilePictureUrl = profilePictureUrl
+    )
+}
+
+fun AuthInfo.toSerializable(): AuthInfoSerializable {
+    return AuthInfoSerializable(
+        accessToken = accessToken,
+        refreshToken = refreshToken,
+        user = user.toSerializable()
     )
 }

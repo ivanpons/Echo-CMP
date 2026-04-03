@@ -1,4 +1,4 @@
-package com.llimapons.core.data.auth.dto.requests
+package com.llimapons.core.data.dto.requests
 
 import kotlinx.serialization.Serializable
 

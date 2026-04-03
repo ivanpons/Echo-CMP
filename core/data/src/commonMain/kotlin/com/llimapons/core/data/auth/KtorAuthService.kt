@@ -1,9 +1,9 @@
 package com.llimapons.core.data.auth
 
-import com.llimapons.core.data.auth.dto.AuthInfoSerializable
-import com.llimapons.core.data.auth.dto.requests.EmailRequest
-import com.llimapons.core.data.auth.dto.requests.LoginRequest
-import com.llimapons.core.data.auth.dto.requests.RegisterRequest
+import com.llimapons.core.data.dto.AuthInfoSerializable
+import com.llimapons.core.data.dto.requests.EmailRequest
+import com.llimapons.core.data.dto.requests.LoginRequest
+import com.llimapons.core.data.dto.requests.RegisterRequest
 import com.llimapons.core.data.mappers.toDomain
 import com.llimapons.core.data.networking.get
 import com.llimapons.core.data.networking.post
