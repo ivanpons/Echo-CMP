@@ -10,14 +10,15 @@ import com.llimapons.auth.presentation.forgot_password.ForgotPasswordRoot
 import com.llimapons.auth.presentation.login.LoginRoot
 import com.llimapons.auth.presentation.register.RegisterRoot
 import com.llimapons.auth.presentation.register_success.RegisterSuccessRoot
+import com.llimapons.auth.presentation.reset_password.ResetPasswordRoot
 
 fun NavGraphBuilder.authGraph(
     navController: NavController,
     onLoginSuccess: () -> Unit,
-){
+) {
     navigation<AuthGraphRoutes.Graph>(
         startDestination = AuthGraphRoutes.Login
-    ){
+    ) {
         composable<AuthGraphRoutes.Login> {
             LoginRoot(
                 onLoginSuccess = onLoginSuccess,
@@ -93,6 +94,21 @@ fun NavGraphBuilder.authGraph(
         composable<AuthGraphRoutes.ForgotPassword> {
             ForgotPasswordRoot()
         }
+
+        composable<AuthGraphRoutes.ResetPassword>(
+            deepLinks = listOf(
+                navDeepLink {
+                    this.uriPattern = "https://echo.llimapons.com/api/auth/reset-password?token={token}"
+                },
+                navDeepLink {
+                    this.uriPattern = "echo://echo.llimapons.com/api/auth/reset-password?token={token}"
+                },
+            )
+        )  {
+            ResetPasswordRoot()
+        }
+
+
     }
 
 }
