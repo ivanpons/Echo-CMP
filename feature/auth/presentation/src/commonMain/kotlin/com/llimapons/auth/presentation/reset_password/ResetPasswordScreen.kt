@@ -15,6 +15,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.llimapons.core.designsystem.components.brand.EchoBrandLogo
 import com.llimapons.core.designsystem.components.buttons.EchoButton
 import com.llimapons.core.designsystem.components.layouts.EchoAdaptativeFormLayout
+import com.llimapons.core.designsystem.components.layouts.EchoSnackbarScaffold
 import com.llimapons.core.designsystem.components.textfields.EchoPasswordTextField
 import com.llimapons.core.designsystem.components.textfields.EchoTextField
 import com.llimapons.core.designsystem.theme.EchoTheme
@@ -47,43 +48,45 @@ fun ResetPasswordScreen(
     state: ResetPasswordState,
     onAction: (ResetPasswordAction) -> Unit,
 ) {
-    EchoAdaptativeFormLayout(
-        headerText = stringResource(Res.string.set_new_password),
-        logo = { EchoBrandLogo() },
-        errorText = state.errorText?.asString()
-    ) {
-        EchoPasswordTextField(
-            state = state.passwordTextState,
-            modifier = Modifier.fillMaxWidth(),
-            placeHolder = stringResource(Res.string.password),
-            title = stringResource(Res.string.new_password),
-            supportingText = stringResource(Res.string.password_hint),
-            isPasswordVisible = state.isPasswordVisible,
-            onToggleVisibilityClick = {
-                onAction(ResetPasswordAction.OnTogglePasswordVisibility)
-            }
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        EchoButton(
-            text = stringResource(Res.string.submit),
-            onClick = {
-                onAction(ResetPasswordAction.OnSubmitClick)
-            },
-            modifier = Modifier
-                .fillMaxWidth(),
-            enabled = !state.isLoading && state.canSubmit,
-            isLoading = state.isLoading
-        )
-        if (state.isResetSuccessful) {
+    EchoSnackbarScaffold {
+        EchoAdaptativeFormLayout(
+            headerText = stringResource(Res.string.set_new_password),
+            logo = { EchoBrandLogo() },
+            errorText = state.errorText?.asString()
+        ) {
+            EchoPasswordTextField(
+                state = state.passwordTextState,
+                modifier = Modifier.fillMaxWidth(),
+                placeHolder = stringResource(Res.string.password),
+                title = stringResource(Res.string.new_password),
+                supportingText = stringResource(Res.string.password_hint),
+                isPasswordVisible = state.isPasswordVisible,
+                onToggleVisibilityClick = {
+                    onAction(ResetPasswordAction.OnTogglePasswordVisibility)
+                }
+            )
             Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = stringResource(Res.string.reset_password_successfully),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.extended.success,
+            EchoButton(
+                text = stringResource(Res.string.submit),
+                onClick = {
+                    onAction(ResetPasswordAction.OnSubmitClick)
+                },
                 modifier = Modifier
                     .fillMaxWidth(),
-                textAlign = TextAlign.Center
+                enabled = !state.isLoading && state.canSubmit,
+                isLoading = state.isLoading
             )
+            if (state.isResetSuccessful) {
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = stringResource(Res.string.reset_password_successfully),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.extended.success,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }

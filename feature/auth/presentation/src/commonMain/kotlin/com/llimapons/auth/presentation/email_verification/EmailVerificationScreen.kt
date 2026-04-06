@@ -23,6 +23,7 @@ import com.llimapons.core.designsystem.components.buttons.EchoButton
 import com.llimapons.core.designsystem.components.buttons.EchoButtonStyle
 import com.llimapons.core.designsystem.components.layouts.EchoAdaptativeResultLayout
 import com.llimapons.core.designsystem.components.layouts.EchoSimpleResultLayout
+import com.llimapons.core.designsystem.components.layouts.EchoSnackbarScaffold
 import com.llimapons.core.designsystem.theme.EchoTheme
 import com.llimapons.core.designsystem.theme.extended
 import echo.feature.auth.presentation.generated.resources.Res
@@ -48,7 +49,7 @@ fun EmailVerificationRoot(
     EmailVerificationScreen(
         state = state,
         onAction = { action ->
-            when(action){
+            when (action) {
                 EmailVerificationAction.OnCloseClick -> onCloseClick()
                 EmailVerificationAction.OnLoginClick -> onLoginClick()
             }
@@ -62,55 +63,58 @@ fun EmailVerificationScreen(
     state: EmailVerificationState,
     onAction: (EmailVerificationAction) -> Unit,
 ) {
+    EchoSnackbarScaffold {
+        EchoAdaptativeResultLayout {
+            when {
+                state.isVerifying -> {
+                    VerifyingContent(
+                        Modifier.fillMaxWidth()
+                    )
+                }
 
-    EchoAdaptativeResultLayout {
-        when {
-            state.isVerifying -> {
-                VerifyingContent(
-                    Modifier.fillMaxWidth()
-                )
-            }
-            state.isVerified -> {
-                EchoSimpleResultLayout(
-                    title = stringResource(Res.string.email_verified_successfully),
-                    description = stringResource(Res.string.email_verified_successfully_desc),
-                    icon = {
-                        EchoSuccessIcon()
-                    },
-                    primaryButton = {
-                        EchoButton(
-                            text = stringResource(Res.string.login),
-                            onClick = {
-                                onAction(EmailVerificationAction.OnLoginClick)
-                            },
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                    }
-                )
-            }
-            else -> {
-                EchoSimpleResultLayout(
-                    title = stringResource(Res.string.email_verified_failed),
-                    description = stringResource(Res.string.email_verified_failed_desc),
-                    icon = {
-                        Spacer(modifier = Modifier.height(32.dp))
-                        EchoFailureIcon(
-                            modifier = Modifier
-                                .size(80.dp)
-                        )
-                        Spacer(modifier = Modifier.height(32.dp))
-                    },
-                    primaryButton = {
-                        EchoButton(
-                            text = stringResource(Res.string.close),
-                            onClick = {
-                                onAction(EmailVerificationAction.OnCloseClick)
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                            style = EchoButtonStyle.SECONDARY
-                        )
-                    }
-                )
+                state.isVerified -> {
+                    EchoSimpleResultLayout(
+                        title = stringResource(Res.string.email_verified_successfully),
+                        description = stringResource(Res.string.email_verified_successfully_desc),
+                        icon = {
+                            EchoSuccessIcon()
+                        },
+                        primaryButton = {
+                            EchoButton(
+                                text = stringResource(Res.string.login),
+                                onClick = {
+                                    onAction(EmailVerificationAction.OnLoginClick)
+                                },
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    )
+                }
+
+                else -> {
+                    EchoSimpleResultLayout(
+                        title = stringResource(Res.string.email_verified_failed),
+                        description = stringResource(Res.string.email_verified_failed_desc),
+                        icon = {
+                            Spacer(modifier = Modifier.height(32.dp))
+                            EchoFailureIcon(
+                                modifier = Modifier
+                                    .size(80.dp)
+                            )
+                            Spacer(modifier = Modifier.height(32.dp))
+                        },
+                        primaryButton = {
+                            EchoButton(
+                                text = stringResource(Res.string.close),
+                                onClick = {
+                                    onAction(EmailVerificationAction.OnCloseClick)
+                                },
+                                modifier = Modifier.fillMaxWidth(),
+                                style = EchoButtonStyle.SECONDARY
+                            )
+                        }
+                    )
+                }
             }
         }
     }
@@ -160,7 +164,7 @@ private fun EmailVerificationSuccessPreview() {
     EchoTheme {
         EmailVerificationScreen(
             state = EmailVerificationState(
-                isVerified =true
+                isVerified = true
             ),
             onAction = {}
         )

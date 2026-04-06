@@ -30,6 +30,7 @@ import com.llimapons.core.designsystem.components.brand.EchoBrandLogo
 import com.llimapons.core.designsystem.theme.EchoTheme
 import com.llimapons.core.designsystem.theme.extended
 import com.llimapons.core.presentation.util.DeviceConfiguration
+import com.llimapons.core.presentation.util.clearFocusOnTap
 import com.llimapons.core.presentation.util.currentDeviceConfiguration
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -52,6 +53,7 @@ fun EchoAdaptativeFormLayout(
         DeviceConfiguration.MOBILE_PORTRAIT -> {
             EchoSurface(
                 modifier = modifier
+                    .clearFocusOnTap()
                     .consumeWindowInsets(WindowInsets.navigationBars)
                     .consumeWindowInsets(WindowInsets.displayCutout),
                 header = {
