@@ -14,6 +14,9 @@ kotlin {
                 implementation(libs.kotlin.stdlib)
                 // Add KMP dependencies here
 
+                implementation(libs.coil.compose)
+                implementation(libs.coil.network.ktor)
+
                 implementation(projects.core.presentation)
 
                 implementation(compose.components.resources)
