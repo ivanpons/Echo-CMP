@@ -11,7 +11,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun EchoStackedAvatars(
-    avatars: List<AvatarUi>,
+    avatars: List<ChatParticipantUi>,
     modifier: Modifier = Modifier,
     size: AvatarSize = AvatarSize.SMALL,
     maxVisible: Int = 2,
@@ -51,17 +51,17 @@ fun EchoStackedAvatarsPreview() {
     EchoTheme {
         EchoStackedAvatars(
             avatars = listOf(
-                AvatarUi(
+                ChatParticipantUi(
                     id = "",
                     username = "",
                     initials = "A",
                 ),
-                AvatarUi(
+                ChatParticipantUi(
                     id = "",
                     username = "",
                     initials = "B",
                 ),
-                AvatarUi(
+                ChatParticipantUi(
                     id = "",
                     username = "",
                     initials = "C",

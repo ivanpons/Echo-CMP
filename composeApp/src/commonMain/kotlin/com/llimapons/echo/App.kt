@@ -6,7 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.rememberNavController
 import com.llimapons.auth.presentation.navigation.AuthGraphRoutes
-import com.llimapons.chat.presentation.chat_list.ChatListRoute
+import com.llimapons.chat.presentation.navigation.ChatGraphRoutes
 import com.llimapons.core.designsystem.theme.EchoTheme
 import com.llimapons.core.presentation.util.ObserveAsEvents
 import com.llimapons.echo.navigation.DeeplinkListener
@@ -49,7 +49,7 @@ fun App(
             NavigationRoot(
                 navController = navController,
                 startDestination = if (state.isLoggedIn) {
-                    ChatListRoute
+                    ChatGraphRoutes.Graph
                 } else {
                     AuthGraphRoutes.Graph
                 }

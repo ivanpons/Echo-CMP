@@ -9,6 +9,8 @@ import com.llimapons.auth.presentation.navigation.AuthGraphRoutes
 import com.llimapons.auth.presentation.navigation.authGraph
 import com.llimapons.chat.presentation.chat_list.ChatListRoute
 import com.llimapons.chat.presentation.chat_list.ChatListScreenRoot
+import com.llimapons.chat.presentation.navigation.ChatGraphRoutes
+import com.llimapons.chat.presentation.navigation.chatGraph
 
 @Composable
 fun NavigationRoot(
@@ -23,7 +25,7 @@ fun NavigationRoot(
         authGraph(
             navController = navController,
             onLoginSuccess = {
-                navController.navigate(ChatListRoute){
+                navController.navigate(ChatGraphRoutes.Graph){
                     popUpTo(AuthGraphRoutes.Graph){
                         inclusive = true
                     }
@@ -31,8 +33,8 @@ fun NavigationRoot(
             }
         )
 
-        composable<ChatListRoute> {
-            ChatListScreenRoot()
-        }
+        chatGraph(
+            navController = navController
+        )
     }
 }
