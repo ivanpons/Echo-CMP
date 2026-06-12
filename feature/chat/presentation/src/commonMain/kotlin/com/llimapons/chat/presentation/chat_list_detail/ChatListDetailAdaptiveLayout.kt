@@ -18,6 +18,8 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.llimapons.chat.presentation.chat_detail.ChatDetailRoot
+import com.llimapons.chat.presentation.chat_list.ChatListRoot
 import com.llimapons.chat.presentation.create_chat.CreateChatRoot
 import com.llimapons.core.designsystem.theme.extended
 import com.llimapons.core.presentation.util.DialogSheetScopedViewModel
@@ -66,12 +68,43 @@ fun ChatListDetailAdaptiveLayout(
             .background(MaterialTheme.colorScheme.extended.surfaceLower),
         listPane = {
             AnimatedPane {
-
+                ChatListRoot(
+                    selectedChatId = sharedState.selectedChatId,
+                    onChatClick = {
+                        chatListDetailViewModel.onAction(ChatListDetailAction.OnSelectChat(it))
+                        scope.launch {
+                            scaffoldNavigator.navigateTo(
+                                ListDetailPaneScaffoldRole.Detail
+                            )
+                        }
+                    },
+                    onSuccessfulLogout = onLogout,
+                    onCreateChatClick = {
+                        chatListDetailViewModel.onAction(ChatListDetailAction.OnCreateChatClick)
+                    },
+                    onProfileSettingsClick = {
+                        chatListDetailViewModel.onAction(ChatListDetailAction.OnProfileSettingsClick)
+                    },
+                )
             }
         },
         detailPane = {
             AnimatedPane {
-
+                val listPane = scaffoldNavigator.scaffoldValue[ListDetailPaneScaffoldRole.List]
+                ChatDetailRoot(
+                    chatId = sharedState.selectedChatId,
+                    isDetailPresent = detailPane == PaneAdaptedValue.Expanded && listPane == PaneAdaptedValue.Expanded,
+                    onChatMembersClick = {
+                        chatListDetailViewModel.onAction(ChatListDetailAction.OnManageChatClick)
+                    },
+                    onBack = {
+                        scope.launch {
+                            if(scaffoldNavigator.canNavigateBack()) {
+                                scaffoldNavigator.navigateBack()
+                            }
+                        }
+                    }
+                )
             }
         }
     )

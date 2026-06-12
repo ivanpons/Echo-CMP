@@ -2,6 +2,7 @@ package com.llimapons.core.designsystem.components.textfields
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,13 +14,17 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.unit.dp
 import com.llimapons.core.designsystem.components.buttons.EchoButton
@@ -34,9 +39,13 @@ fun EchoMultilineTextField(
     placeholder: String? = null,
     enabled: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    onKeyboardActions: () -> Unit = {},
+    onKeyboardAction: () -> Unit = {},
+    maxHeightInLines: Int = 3,
     bottomContent: @Composable (RowScope.() -> Unit)? = null
 ) {
+    val textFieldFocusRequester = remember {
+        FocusRequester()
+    }
     Column(
         modifier = modifier
             .background(
@@ -48,6 +57,13 @@ fun EchoMultilineTextField(
                 color = MaterialTheme.colorScheme.extended.surfaceOutline,
                 shape = RoundedCornerShape(16.dp)
             )
+            .clickable(
+                interactionSource = null,
+                indication = null,
+                onClick = {
+                    textFieldFocusRequester.requestFocus()
+                }
+            )
             .padding(
                 vertical = 12.dp,
                 horizontal = 16.dp
@@ -56,36 +72,40 @@ fun EchoMultilineTextField(
     ) {
         BasicTextField(
             state = state,
-            modifier = Modifier
-                .weight(1f),
             enabled = enabled,
+            modifier = Modifier
+                .fillMaxWidth()
+                .focusRequester(textFieldFocusRequester),
             textStyle = MaterialTheme.typography.bodyLarge.copy(
                 color = MaterialTheme.colorScheme.extended.textPrimary
             ),
+            lineLimits = TextFieldLineLimits.MultiLine(
+                minHeightInLines = 1,
+                maxHeightInLines = maxHeightInLines
+            ),
             keyboardOptions = keyboardOptions,
             onKeyboardAction = {
-                onKeyboardActions()
+                onKeyboardAction()
             },
             cursorBrush = SolidColor(MaterialTheme.colorScheme.extended.textPrimary),
-            decorator = {innerbox ->
-                if(placeholder != null && state.text.isEmpty()){
+            decorator = { innerBox ->
+                if(placeholder != null && state.text.isEmpty()) {
                     Text(
                         text = placeholder,
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.extended.textPlaceholder
+                        color = MaterialTheme.colorScheme.extended.textPlaceholder,
+                        style = MaterialTheme.typography.bodyLarge
                     )
                 }
-                innerbox()
+                innerBox()
             }
         )
-
-        if (bottomContent != null){
+        if(bottomContent != null) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalAlignment = Alignment.CenterVertically
-            ){
+            ) {
                 bottomContent(this)
             }
         }

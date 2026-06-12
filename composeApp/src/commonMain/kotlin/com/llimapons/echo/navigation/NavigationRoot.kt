@@ -7,8 +7,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.llimapons.auth.presentation.navigation.AuthGraphRoutes
 import com.llimapons.auth.presentation.navigation.authGraph
-import com.llimapons.chat.presentation.chat_list.ChatListRoute
-import com.llimapons.chat.presentation.chat_list.ChatListScreenRoot
 import com.llimapons.chat.presentation.navigation.ChatGraphRoutes
 import com.llimapons.chat.presentation.navigation.chatGraph
 
